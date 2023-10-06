@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Movies Evan Likes Kata</title>
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/vendor/mocha.css" />
+    <style>
+      @font-face {
+        font-family: "iAQuattro";
+        src: url("/fonts/iAWriterQuattroS-Regular.woff2") format("woff2"),
+          url("/fonts/iAWriterQuattroS-Regular.woff") format("woff");
+        font-weight: normal;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "iAQuattro";
+        src: url("/fonts/iAWriterQuattroS-BoldItalic.woff2") format("woff2"),
+          url("/fonts/iAWriterQuattroS-BoldItalic.woff") format("woff");
+        font-weight: bold;
+        font-style: italic;
+      }
+      @font-face {
+        font-family: "iAQuattro";
+        src: url("/fonts/iAWriterQuattroS-Bold.woff2") format("woff2"),
+          url("/fonts/iAWriterQuattroS-Bold.woff") format("woff");
+        font-weight: bold;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "iAQuattro";
+        src: url("/fonts/iAWriterQuattroS-Italic.woff2") format("woff2"),
+          url("/fonts/iAWriterQuattroS-Italic.woff") format("woff");
+        font-weight: normal;
+        font-style: italic;
+      }
+
+      html,
+      body,
+      #main {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        overflow: hidden;
+        background: #2f3542;
+        font-family: "iAQuattro", sans-serif;
+      }
+
+      a,
+      a:visited {
+        color: #1e90ff;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="main"></div>
+    <script src="/vendor/mocha.min.js"></script>
+    <script src="/vendor/unexpected.min.js"></script>
+    <script src="/vendor/dom.umd.min.js"></script>
+    <script src="/vendor/react-17.0.1.production.min.js"></script>
+    <script src="/vendor/react-dom-17.0.1.production.min.js"></script>
+    <script src="/vendor/htm-3.0.4.umd.js"></script>
+    <script src="/vendor/emotion-10.0.27.umd.min.js"></script>
+    <script>
+      mocha.setup("bdd");
+      mocha.checkLeaks();
+    </script>
+    <script type="module">
+      import { Main } from "/main.js";
+
+      const { createElement } = React;
+      const { render } = ReactDOM;
+      const html = htm.bind(createElement);
+
+      window.html = html;
+
+      render(html`<${Main} />`, document.querySelector("#main"));
+    </script>
+  </body>
+</html>

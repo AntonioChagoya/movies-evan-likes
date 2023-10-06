@@ -1,0 +1,12 @@
+:1234
+
+file_server
+try_files {path} {path}/ your-code-here/{path}
+
+route {
+	header Cache-Control "no-cache"
+	header /api/* Content-Type "application/json"
+	header /api/assets/*.jpg Content-Type "image/jpg"
+	header /api/assets/* Content-Disposition "inline"
+	header /favicon.ico Content-Type "image/x-icon"
+}

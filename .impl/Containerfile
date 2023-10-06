@@ -1,0 +1,32 @@
+FROM caddy:2.1.1-alpine
+
+EXPOSE 1234
+
+COPY $PWD/.impl/Caddyfile /etc/caddy/Caddyfile
+COPY $PWD/.impl/api /srv/api/
+COPY $PWD/.impl/fonts /srv/fonts/
+COPY $PWD/.impl/routes /srv/routes/
+COPY $PWD/.impl/assets /srv/assets/
+COPY $PWD/.impl/vendor /srv/vendor/
+
+COPY \
+	$PWD/.impl/index.html \
+	$PWD/.impl/routes.js \
+	$PWD/.impl/main.js \
+	$PWD/.impl/use-location.js \
+	$PWD/.impl/favicon.ico \
+	/srv/
+
+RUN mkdir /srv/steps && \
+	ln -sfn ../your-code-here /srv/your-code-here && \
+	ln -sfn index.html /srv/done && \
+	ln -sfn index.html /srv/tests && \
+	ln -sfn ../index.html /srv/steps/1 && \
+	ln -sfn ../index.html /srv/steps/2 && \
+	ln -sfn ../index.html /srv/steps/3 && \
+	ln -sfn ../index.html /srv/steps/4 && \
+	ln -sfn ../index.html /srv/steps/5 && \
+	ln -sfn ../index.html /srv/steps/6 && \
+	ln -sfn ../index.html /srv/steps/7 && \
+	ln -sfn ../index.html /srv/steps/8 && \
+	ln -sfn ../index.html /srv/steps/9

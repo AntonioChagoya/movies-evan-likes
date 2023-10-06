@@ -1,0 +1,70 @@
+#!/bin/zsh
+# vi: ft=zsh
+
+DEFAULT_CADDY_PATH="caddy"
+ARGS=" run"
+show_help=false
+run_with_docker=false
+
+help=`cat <<TXT
+start
+
+Run the "Movies Evan Likes!" code kata.
+
+If 'caddy' is not in your PATH, provide its location with 'CADDY_PATH'.
+
+USAGE:
+    start [FLAGS/OPTIONS]
+
+FLAGS:
+    -d, --docker  Run with Docker
+    -h, --help    Prints help information
+TXT
+`
+
+while [[ "$1" =~ ^- && ! "$1" == "--" ]]
+do case $1 in
+	-d | --docker) run_with_docker=true ;;
+	-h | --help) show_help=true ;;
+esac; shift; done
+
+if [[ "$1" == "--" ]]; then shift; fi
+
+if [ "$show_help" = true ]; then
+	echo $help
+	exit 0
+fi
+
+if [ "$run_with_docker" = true ]; then
+	echo "building container..."
+	docker build --file .impl/Containerfile --tag kofile/movies-evan-likes .
+
+	echo "running container..."
+	docker run \
+		--rm \
+		--name movies-evan-likes \
+		-p 1234:1234 \
+		--volume $PWD/your-code-here:/your-code-here \
+		kofile/movies-evan-likes
+else
+	mkdir -p .impl/steps
+	ln -sfn ../your-code-here .impl/your-code-here
+	ln -sfn index.html .impl/done
+	ln -sfn index.html .impl/tests
+	ln -sfn ../index.html .impl/steps/1
+	ln -sfn ../index.html .impl/steps/2
+	ln -sfn ../index.html .impl/steps/3
+	ln -sfn ../index.html .impl/steps/4
+	ln -sfn ../index.html .impl/steps/5
+	ln -sfn ../index.html .impl/steps/6
+	ln -sfn ../index.html .impl/steps/7
+	ln -sfn ../index.html .impl/steps/8
+	ln -sfn ../index.html .impl/steps/9
+
+	if [[ -z "$CADDY_PATH" ]]; then
+		exec sh -c "(cd .impl && ${DEFAULT_CADDY_PATH} run)"
+	else
+		exec sh -c "(cd .impl && ${CADDY_PATH} run)"
+	fi
+fi
+
