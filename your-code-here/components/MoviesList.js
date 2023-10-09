@@ -65,7 +65,7 @@ export const MoviesList = () => {
         isYearValid = true;
       } 
   
-      if (key === 'title' && movie.title.includes(value)) {
+      if (key === 'title' && movie.title.toLowerCase().includes(value.toLowerCase())) {
         isTitleValid = true;
       }
     });
